@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import HealthKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -15,31 +16,37 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
+    private var healthStore: HealthStore?
+    
+    @State private var steps: [Step] = [Step]()
+    
+    let user_id = UUID().uuidString
+    var TerraClient: Terra?
 
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
+    init() {
+        TerraClient = Terra(user_id: user_id, dev_id: "testing")
+    }
+    
+    private func updateUIFromStatistics(_ statisticsCollection: HKStatisticsCollection){
+        let startDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        let endDate = Date()
+        statisticsCollection.enumerateStatistics(from: startDate, to: endDate){
+            (statistics, stop) in
+            let count = statistics.sumQuantity()?.doubleValue(for:.count())
+            let step = Step(count: Int(count ?? 0), timestamp: statistics.startDate)
+            steps.append(step)
         }
+    }
+    var body: some View {
+        Text("Hello")
+        TerraConnectUI(dev_id: "testing")
+        Button("Test Athlete") {
+            TerraClient?.getAthleteJson()
+        }
+        Button("Test Daily"){
+            TerraClient?.getDaily()
+        }
+
     }
 
     private func addItem() {

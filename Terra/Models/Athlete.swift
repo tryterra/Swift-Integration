@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct Athlete: Codable{
+    var dateOfBirth: String
+    var gender: String
+    var username: String
+}

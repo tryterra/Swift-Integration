@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B2EBA0C26FE021100F2FC35 /* Athlete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA0B26FE021100F2FC35 /* Athlete.swift */; };
+		9B2EBA1026FE315400F2FC35 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA0F26FE315400F2FC35 /* Samples.swift */; };
+		9B2EBA1226FE385A00F2FC35 /* Daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1126FE385A00F2FC35 /* Daily.swift */; };
+		9B2EBA1426FE410500F2FC35 /* DailyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1326FE410500F2FC35 /* DailyData.swift */; };
+		9B2EBA1626FE41F000F2FC35 /* SamplesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */; };
+		9B2EBA1826FE435300F2FC35 /* AthleteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1726FE435300F2FC35 /* AthleteData.swift */; };
+		9B2EBA1A26FE4B2500F2FC35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */; };
 		9B9A003326FC90100017C153 /* TerraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003226FC90100017C153 /* TerraApp.swift */; };
 		9B9A003526FC90100017C153 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003426FC90100017C153 /* ContentView.swift */; };
 		9B9A003726FC90130017C153 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9A003626FC90130017C153 /* Assets.xcassets */; };
@@ -16,6 +23,12 @@
 		9B9A004926FC90130017C153 /* TerraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A004826FC90130017C153 /* TerraTests.swift */; };
 		9B9A005326FC90130017C153 /* TerraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A005226FC90130017C153 /* TerraUITests.swift */; };
 		9B9A005526FC90130017C153 /* TerraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A005426FC90130017C153 /* TerraUITestsLaunchTests.swift */; };
+		9B9A006626FC98970017C153 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9A006526FC98970017C153 /* HealthKit.framework */; };
+		9B9A006826FC99AD0017C153 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A006726FC99AD0017C153 /* HealthStore.swift */; };
+		9B9A007226FCCA770017C153 /* TerraConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A007126FCCA770017C153 /* TerraConnect.swift */; };
+		9B9A007826FCD3DB0017C153 /* TerraConnectUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A007726FCD3DB0017C153 /* TerraConnectUI.swift */; };
+		9B9A007A26FCE7800017C153 /* Terra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A007926FCE7800017C153 /* Terra.swift */; };
+		9B9A007C26FCEE2E0017C153 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A007B26FCEE2E0017C153 /* Activity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +49,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B2EBA0B26FE021100F2FC35 /* Athlete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athlete.swift; sourceTree = "<group>"; };
+		9B2EBA0F26FE315400F2FC35 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
+		9B2EBA1126FE385A00F2FC35 /* Daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Daily.swift; sourceTree = "<group>"; };
+		9B2EBA1326FE410500F2FC35 /* DailyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyData.swift; sourceTree = "<group>"; };
+		9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplesData.swift; sourceTree = "<group>"; };
+		9B2EBA1726FE435300F2FC35 /* AthleteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteData.swift; sourceTree = "<group>"; };
+		9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9B9A002F26FC90100017C153 /* Terra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9A003226FC90100017C153 /* TerraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraApp.swift; sourceTree = "<group>"; };
 		9B9A003426FC90100017C153 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,6 +68,14 @@
 		9B9A004E26FC90130017C153 /* TerraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TerraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9A005226FC90130017C153 /* TerraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraUITests.swift; sourceTree = "<group>"; };
 		9B9A005426FC90130017C153 /* TerraUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9B9A006326FC98970017C153 /* Terra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Terra.entitlements; sourceTree = "<group>"; };
+		9B9A006526FC98970017C153 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		9B9A006726FC99AD0017C153 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		9B9A006926FC9C9E0017C153 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9B9A007126FCCA770017C153 /* TerraConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraConnect.swift; sourceTree = "<group>"; };
+		9B9A007726FCD3DB0017C153 /* TerraConnectUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraConnectUI.swift; sourceTree = "<group>"; };
+		9B9A007926FCE7800017C153 /* Terra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terra.swift; sourceTree = "<group>"; };
+		9B9A007B26FCEE2E0017C153 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B9A006626FC98970017C153 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +111,7 @@
 				9B9A004726FC90130017C153 /* TerraTests */,
 				9B9A005126FC90130017C153 /* TerraUITests */,
 				9B9A003026FC90100017C153 /* Products */,
+				9B9A006426FC98970017C153 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,12 +128,23 @@
 		9B9A003126FC90100017C153 /* Terra */ = {
 			isa = PBXGroup;
 			children = (
+				9B9A006A26FCB8DF0017C153 /* Models */,
+				9B9A006926FC9C9E0017C153 /* Info.plist */,
+				9B9A006326FC98970017C153 /* Terra.entitlements */,
 				9B9A003226FC90100017C153 /* TerraApp.swift */,
 				9B9A003426FC90100017C153 /* ContentView.swift */,
 				9B9A003626FC90130017C153 /* Assets.xcassets */,
+				9B9A006726FC99AD0017C153 /* HealthStore.swift */,
 				9B9A003B26FC90130017C153 /* Persistence.swift */,
 				9B9A003D26FC90130017C153 /* Terra.xcdatamodeld */,
 				9B9A003826FC90130017C153 /* Preview Content */,
+				9B9A007126FCCA770017C153 /* TerraConnect.swift */,
+				9B9A007726FCD3DB0017C153 /* TerraConnectUI.swift */,
+				9B9A007926FCE7800017C153 /* Terra.swift */,
+				9B2EBA1326FE410500F2FC35 /* DailyData.swift */,
+				9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */,
+				9B2EBA1726FE435300F2FC35 /* AthleteData.swift */,
+				9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */,
 			);
 			path = Terra;
 			sourceTree = "<group>";
@@ -131,6 +172,25 @@
 				9B9A005426FC90130017C153 /* TerraUITestsLaunchTests.swift */,
 			);
 			path = TerraUITests;
+			sourceTree = "<group>";
+		};
+		9B9A006426FC98970017C153 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B9A006526FC98970017C153 /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B9A006A26FCB8DF0017C153 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9B9A007B26FCEE2E0017C153 /* Activity.swift */,
+				9B2EBA0B26FE021100F2FC35 /* Athlete.swift */,
+				9B2EBA0F26FE315400F2FC35 /* Samples.swift */,
+				9B2EBA1126FE385A00F2FC35 /* Daily.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B9A003A26FC90130017C153 /* Preview Assets.xcassets in Resources */,
+				9B2EBA1A26FE4B2500F2FC35 /* Main.storyboard in Resources */,
 				9B9A003726FC90130017C153 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,9 +325,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B9A003F26FC90130017C153 /* Terra.xcdatamodeld in Sources */,
+				9B2EBA1626FE41F000F2FC35 /* SamplesData.swift in Sources */,
+				9B9A007A26FCE7800017C153 /* Terra.swift in Sources */,
+				9B9A006826FC99AD0017C153 /* HealthStore.swift in Sources */,
 				9B9A003C26FC90130017C153 /* Persistence.swift in Sources */,
+				9B9A007226FCCA770017C153 /* TerraConnect.swift in Sources */,
+				9B2EBA1026FE315400F2FC35 /* Samples.swift in Sources */,
 				9B9A003526FC90100017C153 /* ContentView.swift in Sources */,
+				9B9A007826FCD3DB0017C153 /* TerraConnectUI.swift in Sources */,
+				9B9A007C26FCEE2E0017C153 /* Activity.swift in Sources */,
+				9B2EBA1826FE435300F2FC35 /* AthleteData.swift in Sources */,
 				9B9A003326FC90100017C153 /* TerraApp.swift in Sources */,
+				9B2EBA1226FE385A00F2FC35 /* Daily.swift in Sources */,
+				9B2EBA1426FE410500F2FC35 /* DailyData.swift in Sources */,
+				9B2EBA0C26FE021100F2FC35 /* Athlete.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,11 +496,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Terra/Terra.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Terra/Preview Content\"";
+				DEVELOPMENT_TEAM = YGPGS9G8N2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Terra/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app will read and send health data";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app will read and send health data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -442,6 +520,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = terra.Terra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -453,11 +532,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Terra/Terra.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Terra/Preview Content\"";
+				DEVELOPMENT_TEAM = YGPGS9G8N2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Terra/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app will read and send health data";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app will read and send health data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -471,6 +556,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = terra.Terra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -482,8 +568,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = URWZG4YJ54;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -506,8 +594,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = URWZG4YJ54;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (

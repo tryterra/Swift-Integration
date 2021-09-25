@@ -9,12 +9,13 @@ import Foundation
 import HealthKit
 
 class SamplesData{
-    var healthStore: HKHealthStore?
+    var healthStore: HealthStore?
     init(){
-        self.healthStore = HealthStore().healthStore
+        self.healthStore = HealthStore()
     }
     
-    func getHeartRates() -> [HeartRate]{
+    func getHeartRates(group: DispatchGroup, queue: DispatchQueue ,completion: @escaping ([HeartRate]) -> Void){
+        
         var heartRates: [HeartRate] = [HeartRate]()
         let calendar = NSCalendar.current
         let endDate = Date()
@@ -44,17 +45,21 @@ class SamplesData{
         
         heartRateQuery = HKQuantitySeriesSampleQuery(quantityType: heartRateType, predicate: predicate, quantityHandler: sampleHeartRateDataHandler(query:quantity:interval:sample:done:error:))
         
-        if let healthStore = self.healthStore,
+        if let healthStore = self.healthStore?.healthStore,
            let heartRateQuery = heartRateQuery{
-            healthStore.execute(heartRateQuery)
+                queue.async(group:group) {
+                    group.enter()
+                    healthStore.execute(heartRateQuery)
+                    group.leave()
+                }
             }
-        
-        return heartRates
+        group.notify(queue: queue){
+            completion(heartRates)
+        }
     }
     
-    func getHeartRateHRV() -> [HRV] {
+    func getHeartRateHRV(group: DispatchGroup, queue: DispatchQueue, completion: @escaping ([HRV]) -> Void){
         var heartRateHRV: [HRV] = [HRV]()
-        
         let calendar = NSCalendar.current
         let endDate = Date()
         
@@ -83,11 +88,17 @@ class SamplesData{
         
         hrvQuery = HKQuantitySeriesSampleQuery(quantityType: heartRateVarType, predicate: predicate, quantityHandler:  sampleHRVDataHandler(query:quantity:interval:sample:done:error:))
         
-        if let healthStore = self.healthStore,
+        if let healthStore = self.healthStore?.healthStore,
            let hrvQuery = hrvQuery{
-            healthStore.execute(hrvQuery)
+                queue.async(group:group) {
+                    group.enter()
+                    healthStore.execute(hrvQuery)
+                    group.leave()
+                }
+            }
+        group.notify(queue: queue){
+            completion(heartRateHRV)
         }
-        return heartRateHRV
     }
     
 }

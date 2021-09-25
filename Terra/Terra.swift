@@ -20,7 +20,7 @@ class Terra{
     }
     
     private func post(data: String, type: String){
-        let url = URL(string: "http://localhost:5000/apple/athlete")
+        let url = URL(string: "http://localhost:5000/apple/\(type)")
         guard let requestUrl = url else {fatalError()}
             
         var request = URLRequest(url: requestUrl)
@@ -63,14 +63,16 @@ class Terra{
     func getDaily(){
         healthStore?.requestAuthorization(){success in
             if success {
-                do {
-                    let Daily: DailyData = DailyData()
-                    let daily = Daily.getDaily()
-                    let jsonData = try JSONEncoder().encode(daily)
-                    let jsonString = String(data: jsonData, encoding: .utf8)
-                    self.post(data: jsonString ?? "" , type: "daily")
-                } catch {
-                    print (error)
+                let Daily: DailyData = DailyData()
+                Daily.getDaily{()-> Void in
+                    do {
+                        let jsonData = try JSONEncoder().encode(Daily.daily)
+                        let jsonString = String(data: jsonData, encoding: .utf8)
+                        self.post(data: jsonString ?? "" , type: "daily")
+                    }
+                    catch {
+                        print (error)
+                    }
                 }
             }
         }

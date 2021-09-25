@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 @main
 struct TerraApp: App {
@@ -17,4 +18,6 @@ struct TerraApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
+    
 }
+

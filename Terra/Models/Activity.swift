@@ -7,15 +7,19 @@
 
 import Foundation
 
+struct Step: Codable {
+    let count: Int
+    let timestamp: Date
+}
+
 struct Activity: Codable {
     var summary: ActivitySummary
-    var heartRates: [HeartRate]
-    var hrv: [HRV]
-    
+    var samples: Samples    
 }
+
 struct ActivitySummary: Codable{
-    var date: Date
-    var energy: Double
-    var stand: Double
-    var exercise: Double
+    var date: Date = Date()
+    var energy: Double = Double()
+    var standSeconds: Double = Double()
+    var exerciseSeconds: Double = Double()
 }

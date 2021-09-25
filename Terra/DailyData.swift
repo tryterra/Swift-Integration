@@ -7,40 +7,83 @@
 
 import Foundation
 import HealthKit
+import UIKit
 
 class DailyData {
-    var healthStore: HKHealthStore?
-    init(){
-        self.healthStore = HealthStore().healthStore
-    }
+    var healthStore: HealthStore?
+    var daily: Daily
+    var walkDistance: Double
+    var cycleDistance: Double
+    var swimDistance: Double
+    var totalSteps: Int
+    var floorsClimbed: Int
+    var activitySummary: ActivitySummary
     
-    func getDaily() -> Daily {
-        var daily: Daily
+    init(){
+        self.healthStore = HealthStore()
+        self.daily = Daily()
+        self.walkDistance = Double()
+        self.cycleDistance = Double()
+        self.swimDistance = Double()
+        self.totalSteps = Int()
+        self.floorsClimbed = Int()
+        self.activitySummary = ActivitySummary()
+    }
 
+    func getDaily(completion: @escaping ()-> Void) -> Void {
         let calendar = NSCalendar.current
         let endDate = Date()
-        
+        let group = DispatchGroup()
+        let queue = DispatchQueue(label: "terra.daily.queue")
+
         guard let startDate = calendar.date(byAdding: .day, value: -1, to: endDate) else {
             fatalError("Unable to create the start date")
         }
         let samples: SamplesData = SamplesData()
-        let HRV = samples.getHeartRateHRV()
-        let heartRates = samples.getHeartRates()
         
-        let walkDistance = getWalkingDistance(startDate: startDate, endDate: endDate)
-        let cycleDistance = getCyclingDistance(startDate: startDate, endDate: endDate)
-        let swimDistance = getSwimmingDistance(startDate: startDate, endDate: endDate)
-        let floors = getFloorsClimbed(startDate: startDate, endDate: endDate)
-        let steps = getSteps(startDate: startDate, endDate: endDate)
-        let activitySummary = getActivitySummary()!
+        samples.getHeartRateHRV(group: group, queue: queue, completion: {(HRV) -> Void in
+            self.daily.setHRV(HRV: HRV)
+        })
+
+        samples.getHeartRates(group: group, queue: queue, completion: {(hr) -> Void in
+            self.daily.setHeartRates(hr: hr)
+        })
         
-        daily = Daily(activitySummary: activitySummary, hrv: HRV, heartRates: heartRates, walkingOrRunningDistance: walkDistance, steps: Int(steps), floorsClimbed: Int(floors), swimmingDistance: swimDistance, cyclingDistance: cycleDistance)
+        group.enter()
+        queue.async(group: group){ [self] in
+            group.enter()
+            getWalkingDistance(startDate: startDate, endDate: endDate, completion: {() -> Void in
+                group.leave()
+            })
+            group.enter()
+            getCyclingDistance(startDate: startDate, endDate: endDate, completion:  {() -> Void in
+                group.leave()
+            })
+            group.enter()
+            getSwimmingDistance(startDate: startDate, endDate: endDate, completion:  {() -> Void in
+                group.leave()
+            })
+            group.enter()
+            getSteps(startDate: startDate, endDate: endDate, completion: {() -> Void in
+                group.leave()
+            })
+            group.enter()
+            getFloorsClimbed(startDate: startDate, endDate: endDate, completion: {() -> Void in
+                group.leave()
+            })
+            group.enter()
+            getActivitySummary(startDate: startDate, endDate: endDate, completion:  {() ->  Void in
+                group.leave()
+            })
+            group.leave()
+        }
         
-        return daily
+        group.notify(queue: queue){
+            completion()
+        }
     }
     
-    func getSteps(startDate: Date, endDate: Date) -> Double {
-        var steps: Double?
+    func getSteps(startDate: Date, endDate: Date, completion: @escaping ()-> Void) {
         var stepsQuery: HKStatisticsCollectionQuery?
         let stepsType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         
@@ -48,46 +91,58 @@ class DailyData {
 
         stepsQuery = HKStatisticsCollectionQuery(quantityType: stepsType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
         
-        stepsQuery?.initialResultsHandler = {query, distances, error in
+        stepsQuery!.initialResultsHandler = {query, distances, error in
             if let error = error {
                 print(error)
             }
             guard let distances = distances else{
-                fatalError("Cannot get walk distance data")
+                fatalError("Cannot get steps distance data")
             }
             distances.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                steps = statistics.sumQuantity()?.doubleValue(for: .count())
+                if let quantity = statistics.sumQuantity(){
+                    self.totalSteps = Int(quantity.doubleValue(for: .count()))
+                    self.daily.setSteps(steps: self.totalSteps)
+                    completion()
+                }
             }
         }
-        return steps ?? 0.0
+        
+        if let healthStore = self.healthStore?.healthStore, let stepsQuery = stepsQuery {
+            healthStore.execute(stepsQuery)
+        }
     }
     
-    func getFloorsClimbed(startDate: Date, endDate: Date) -> Double {
-        var floors: Double?
+    func getFloorsClimbed(startDate: Date, endDate: Date, completion: @escaping () -> Void) {
         var floorsQuery: HKStatisticsCollectionQuery?
-        let floorsType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        let floorsType = HKQuantityType.quantityType(forIdentifier: .flightsClimbed)!
         
         let samplePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
         floorsQuery = HKStatisticsCollectionQuery(quantityType: floorsType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
         
-        floorsQuery?.initialResultsHandler = {query, distances, error in
+        floorsQuery!.initialResultsHandler = {query, distances, error in
             if let error = error {
                 print(error)
             }
             guard let distances = distances else{
-                fatalError("Cannot get walk distance data")
+                fatalError("Cannot get floors distance data")
             }
+            
             distances.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                floors = statistics.sumQuantity()?.doubleValue(for: .count())
+                if let quantity = statistics.sumQuantity(){
+                    self.floorsClimbed = Int(quantity.doubleValue(for: .count()))
+                    self.daily.setFloors(floors: self.floorsClimbed)
+                    completion()
+                }
             }
         }
-        return floors ?? 0.0
+        if let healthStore = self.healthStore?.healthStore, let floorsQuery = floorsQuery {
+            healthStore.execute(floorsQuery)
+        }
     }
     
     
-    func getWalkingDistance(startDate: Date, endDate: Date) -> Double {
-        var walkDistance: Double?
+    func getWalkingDistance(startDate: Date, endDate: Date, completion: @escaping ()-> Void) {
         var walkDistanceQuery: HKStatisticsCollectionQuery?
         let walkDistanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
         
@@ -95,7 +150,7 @@ class DailyData {
 
         walkDistanceQuery = HKStatisticsCollectionQuery(quantityType: walkDistanceType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
         
-        walkDistanceQuery?.initialResultsHandler = {query, distances, error in
+        walkDistanceQuery!.initialResultsHandler = {query, distances, error in
             if let error = error {
                 print(error)
             }
@@ -103,14 +158,17 @@ class DailyData {
                 fatalError("Cannot get walk distance data")
             }
             distances.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                walkDistance = statistics.sumQuantity()?.doubleValue(for: .meterUnit(with: .none))
+                self.walkDistance = (statistics.sumQuantity()?.doubleValue(for: .meterUnit(with: .none))) ?? 0.0
+                self.daily.setWalkingDistance(distance: self.walkDistance)
+                completion()
             }
         }
-        return walkDistance ?? 0.0
+        if let healthStore = self.healthStore?.healthStore, let walksDistanceQuery = walkDistanceQuery {
+            healthStore.execute(walksDistanceQuery)
+        }
     }
     
-    func getCyclingDistance(startDate: Date, endDate: Date) -> Double {
-        var cyclingDistance: Double?
+    func getCyclingDistance(startDate: Date, endDate: Date, completion: @escaping () -> Void) {
         var cycleDistanceQuery: HKStatisticsCollectionQuery?
         let cycleDistanceType = HKQuantityType.quantityType(forIdentifier: .distanceCycling)!
         
@@ -118,47 +176,51 @@ class DailyData {
         
         cycleDistanceQuery = HKStatisticsCollectionQuery(quantityType: cycleDistanceType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
         
-        cycleDistanceQuery?.initialResultsHandler = {query, distances, error in
+        cycleDistanceQuery!.initialResultsHandler = {query, distances, error in
             if let error = error {
                 print(error)
             }
             guard let distances = distances else{
-                fatalError("Cannot get walk distance data")
+                fatalError("Cannot get cycling distance data")
             }
             distances.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                cyclingDistance = statistics.sumQuantity()?.doubleValue(for: .meterUnit(with: .none))
+                self.cycleDistance = (statistics.sumQuantity()?.doubleValue(for: .meterUnit(with: .none))) ?? 0.0
+                self.daily.setCycling(distance: self.cycleDistance)
             }
         }
-        return cyclingDistance ?? 0.0
+        if let healthStore = self.healthStore?.healthStore, let cycleDistanceQuery = cycleDistanceQuery {
+            healthStore.execute(cycleDistanceQuery)
+        }
     }
     
-    func getSwimmingDistance(startDate: Date, endDate: Date) -> Double {
-        var swimmingDistance: Double?
+    func getSwimmingDistance(startDate: Date, endDate: Date, completion: @escaping () -> Void) {
         var swimDistanceQuery: HKStatisticsCollectionQuery?
         let swimDistanceType = HKQuantityType.quantityType(forIdentifier: .distanceSwimming)!
         
         let samplePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         swimDistanceQuery = HKStatisticsCollectionQuery(quantityType: swimDistanceType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
         
-        swimDistanceQuery?.initialResultsHandler = {query, distances, error in
+        swimDistanceQuery!.initialResultsHandler = {query, distances, error in
             if let error = error {
                 print(error)
             }
             guard let distances = distances else{
-                fatalError("Cannot get walk distance data")
+                fatalError("Cannot get swimming distance data")
             }
             distances.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                swimmingDistance = statistics.sumQuantity()?.doubleValue(for: .meterUnit(with: .none))
+                self.swimDistance = (statistics.sumQuantity()?.doubleValue(for: .meterUnit(with: .none))) ?? 0.0
+                self.daily.setSwimmingDistance(distance: self.swimDistance)
+                completion()
             }
         }
-        return swimmingDistance ?? 0.0
+        if let healthStore = self.healthStore?.healthStore, let swimDistanceQuery = swimDistanceQuery {
+            healthStore.execute(swimDistanceQuery)
+        }
     }
     
     
-    func getActivitySummary() -> ActivitySummary? {
-        var activitySummary: ActivitySummary?
+    func getActivitySummary (startDate: Date, endDate: Date, completion: @escaping() -> Void) {
         let calendar = NSCalendar.current
-        let endDate = Date()
         var summaryQuery: HKActivitySummaryQuery?
         
         guard let startDate = calendar.date(byAdding: .day, value: -1, to: endDate) else {
@@ -179,18 +241,17 @@ class DailyData {
                 return
             }
             for summary in summaries{
-                print("Hello")
                 let energy   = summary.activeEnergyBurned.doubleValue(for: HKUnit.kilocalorie())
                 let stand    = summary.appleStandHours.doubleValue(for: HKUnit.count())
                 let exercise = summary.appleExerciseTime.doubleValue(for: HKUnit.second())
-                
-                activitySummary = ActivitySummary(date: endDate, energy: energy, standSeconds: stand, exerciseSeconds: exercise)
+                self.activitySummary = ActivitySummary(date: endDate, energy: energy, standSeconds: stand, exerciseSeconds: exercise)
+                self.daily.setActivitySummary(summary: self.activitySummary)
+                completion()
             }
         }
-        if let healthStore = self.healthStore, let summaryQuery = summaryQuery {
+        if let healthStore = self.healthStore?.healthStore, let summaryQuery = summaryQuery {
             healthStore.execute(summaryQuery)
         }
-        return activitySummary
     }
     
 }
