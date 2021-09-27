@@ -20,16 +20,4 @@ struct Daily: Codable{
     var swimCount: Int = Int()
     var restingHr: Int = Int()
     
-    mutating func setActivitySummary(summary: ActivitySummary){
-        self.activitySummary = summary
-    }
-    
-    mutating func setHRV(HRV: [HRV]){
-        self.hrv = HRV
-    }
-    
-    mutating func setHeartRates(hr: [HeartRate]){
-        self.heartRates = hr
-    }
-    
 }

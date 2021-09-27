@@ -14,6 +14,7 @@ extension Date {
         return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!    }
 }
 class HealthStore{
+
     var healthStore: HKHealthStore?
     var stepQuery: HKStatisticsCollectionQuery?
         
@@ -21,6 +22,7 @@ class HealthStore{
         if HKHealthStore.isHealthDataAvailable(){
             healthStore = HKHealthStore()
         }
+
     }
     
     func requestAuthorization(completion: @escaping(Bool) -> Void){
@@ -60,10 +62,13 @@ class HealthStore{
 
     }
     
-    func executeStatisticCollectionQueryCumSum(startDate: Date, endDate: Date, quantityType: HKQuantityType, unit: HKUnit, group: DispatchGroup, queue: DispatchQueue, completion: @escaping (Double) -> Void){
+    func executeStatisticCollectionQueryCumSum(startDate: Date, endDate: Date, quantityType: HKQuantityType, unit: HKUnit, completion: @escaping (Double) -> Void){
+        
+        var statResult : Double = Double()
+        let groupCumSum = DispatchGroup()
+        let queueCumSum = DispatchQueue(label: "terra.health.cumSum")
         
         var query: HKStatisticsCollectionQuery?
-        var statResult: Double = Double()
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         
         query = HKStatisticsCollectionQuery(quantityType: quantityType, quantitySamplePredicate: predicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
@@ -78,26 +83,29 @@ class HealthStore{
             result.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
                 statResult = statistics.sumQuantity()?.doubleValue(for: unit) ?? 0.0
             }
-            group.leave()
-
+            groupCumSum.leave()
         }
+        
         if let healthStore = healthStore, let query = query{
-            group.enter()
-            queue.async(group:group) {
-                group.enter()
+            groupCumSum.enter()
+            queueCumSum.async(group:groupCumSum) {
+                groupCumSum.enter()
                 healthStore.execute(query)
+                groupCumSum.leave()
             }
-            group.leave()
         }
-        group.notify(queue: queue){
+        
+        groupCumSum.notify(queue: queueCumSum){
             completion(statResult)
         }
     }
     
-    func executeStatisticCollectionQueryAvg(startDate: Date, endDate: Date, quantityType: HKQuantityType, unit: HKUnit, group: DispatchGroup, queue: DispatchQueue, completion: @escaping (Double) -> Void){
+    func executeStatisticCollectionQueryAvg(startDate: Date, endDate: Date, quantityType: HKQuantityType, unit: HKUnit, completion: @escaping (Double) -> Void){
         
-        var query: HKStatisticsCollectionQuery?
         var statResult: Double = Double()
+        let groupAvg = DispatchGroup()
+        let queueAvg = DispatchQueue(label: "terra.health.avgStats")
+        var query: HKStatisticsCollectionQuery?
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         
         query = HKStatisticsCollectionQuery(quantityType: quantityType, quantitySamplePredicate: predicate, options: .discreteAverage, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
@@ -109,21 +117,20 @@ class HealthStore{
             guard let result = result else{
                 return
             }
-            group.enter()
             result.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
                 statResult = statistics.averageQuantity()?.doubleValue(for: unit) ?? 0.0
-                group.leave()
-
             }
+            groupAvg.leave()
         }
         if let healthStore = healthStore, let query = query{
-            queue.async(group:group) {
-                group.enter()
+            groupAvg.enter()
+            queueAvg.async(group:groupAvg) {
+                groupAvg.enter()
                 healthStore.execute(query)
+                groupAvg.leave()
             }
-            group.leave()
         }
-        group.notify(queue: queue){
+        groupAvg.notify(queue: queueAvg){
             completion(statResult)
         }
     }

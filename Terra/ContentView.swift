@@ -46,7 +46,9 @@ struct ContentView: View {
         Button("Test Daily"){
             TerraClient?.getDaily()
         }
-
+        Button("Test Body"){
+            TerraClient?.getBody()
+        }
     }
 
     private func addItem() {

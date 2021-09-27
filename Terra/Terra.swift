@@ -78,5 +78,23 @@ class Terra{
         }
     }
     
+    func getBody(){
+        healthStore?.requestAuthorization(){ success in
+            if success {
+                let body: BodyData = BodyData()
+                body.getBody{() -> Void in
+                    do {
+                        let jsonData = try JSONEncoder().encode(body.body)
+                        let jsonString = String(data: jsonData, encoding: .utf8)
+                        self.post(data: jsonString ?? "" , type: "body")
+                    }
+                    catch {
+                        print (error)
+                    }
+                }
+            }
+        }
+    }
+    
 }
 

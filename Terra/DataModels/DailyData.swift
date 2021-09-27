@@ -20,6 +20,8 @@ class DailyData {
     var swimCount: Int
     var activitySummary: ActivitySummary
     var restingHr: Int
+    var hr : [HeartRate]
+    var hrv: [HRV]
     
     init(){
         self.healthStore = HealthStore()
@@ -33,6 +35,8 @@ class DailyData {
         self.activitySummary = ActivitySummary()
         self.swimCount = Int()
         self.restingHr = Int()
+        self.hr = [HeartRate]()
+        self.hrv = [HRV]()
     }
 
     func getDaily(completion: @escaping ()-> Void) -> Void {
@@ -48,67 +52,74 @@ class DailyData {
         
         group.enter()
         queue.async(group: group) {
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!, unit: HKUnit.meter(), group: group, queue: queue, completion: {(walkDist) -> Void in
-                self.walkDistance = walkDist
-            })
             
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .distanceCycling)!, unit: HKUnit.meter(), group: group, queue: queue, completion: {(cycleDist) -> Void in
-                self.cycleDistance = cycleDist
-            })
-            
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .distanceSwimming)!, unit: HKUnit.meter(), group: group, queue: queue, completion: {(swimDist) -> Void in
-                self.swimDistance = swimDist
-            })
-            
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .stepCount)!, unit: HKUnit.count(), group: group,queue: queue, completion: {(steps) -> Void in
-                self.totalSteps = Int(steps)
-            })
-            
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .flightsClimbed)!, unit: HKUnit.count(), group: group, queue: queue, completion: {(flights) -> Void in
-                self.floorsClimbed = Int(flights)
-            })
-            
-            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!, unit: HKUnit.hertzUnit(with: .milli), group: group, queue: queue, completion: {(hrRest) -> Void in
-                self.restingHr = Int(hrRest * 60/1000)
-            })
-
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!, unit: HKUnit.kilocalorie(),group: group,queue: queue, completion: {(calorie) -> Void in
-                self.basalEnergy = calorie
-            })
-            
-            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .swimmingStrokeCount)!, unit: HKUnit.count(),group: group,queue: queue, completion: {(swimStroke) -> Void in
-                self.swimCount = Int(swimStroke)
-            })
-//        group.enter()
-//        queue.async {
-//            group.enter()
-//            self.getActivitySummary(startDate: startDate, endDate: endDate, completion:  {() ->  Void in
-//                group.leave()
-//            })
             group.enter()
-            self.daily = Daily(activitySummary: self.activitySummary, hrv: [], heartRates: [], walkingOrRunningDistance: self.walkDistance, steps: self.totalSteps, floorsClimbed: self.floorsClimbed, swimmingDistance: self.swimDistance, cyclingDistance: self.cycleDistance, basalEnergy: self.basalEnergy, swimCount: self.swimCount, restingHr: self.restingHr)
-            group.leave()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!, unit: HKUnit.meter(),completion: {(walkDist) -> Void in
+                self.walkDistance = walkDist
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .distanceCycling)!, unit: HKUnit.meter(),  completion: {(cycleDist) -> Void in
+                self.cycleDistance = cycleDist
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .distanceSwimming)!, unit: HKUnit.meter(),  completion: {(swimDist) -> Void in
+                self.swimDistance = swimDist
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .stepCount)!, unit: HKUnit.count(), completion: {(steps) -> Void in
+                self.totalSteps = Int(steps)
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .flightsClimbed)!, unit: HKUnit.count(),completion: {(flights) -> Void in
+                self.floorsClimbed = Int(flights)
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!, unit: HKUnit.hertzUnit(with: .milli), completion: {(hrRest) -> Void in
+                self.restingHr = Int(hrRest * 60/1000)
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!, unit: HKUnit.kilocalorie(),completion: {(calorie) -> Void in
+                self.basalEnergy = calorie
+                group.leave()
+            })
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryCumSum(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .swimmingStrokeCount)!, unit: HKUnit.count(), completion: {(swimStroke) -> Void in
+                self.swimCount = Int(swimStroke)
+                group.leave()
+            })
             
-            samples.getHeartRateHRV(group: group, queue: queue, completion: {(HRV) -> Void in
-                self.daily.setHRV(HRV: HRV)
+            group.enter()
+            self.getActivitySummary(startDate: startDate, endDate: endDate, completion:  {() ->  Void in
+                group.leave()
             })
-
-            samples.getHeartRates(group: group, queue: queue, completion: {(hr) -> Void in
-                self.daily.setHeartRates(hr: hr)
+            
+            group.enter()
+            samples.getHeartRateHRV(completion: {(HRV) -> Void in
+                self.hrv = HRV
+                group.leave()
             })
+            
+            group.enter()
+            samples.getHeartRates(completion: {(hr) -> Void in
+                self.hr = hr
+                group.leave()
+            })
+            
             group.leave()
         }
-    
         
         group.notify(queue: queue){
-
+            self.daily = Daily(activitySummary: self.activitySummary, hrv: self.hrv, heartRates: self.hr, walkingOrRunningDistance: self.walkDistance, steps: self.totalSteps, floorsClimbed: self.floorsClimbed, swimmingDistance: self.swimDistance, cyclingDistance: self.cycleDistance, basalEnergy: self.basalEnergy, swimCount: self.swimCount, restingHr: self.restingHr)
             completion()
         }
     }
     
-
-
-
     func getActivitySummary (startDate: Date, endDate: Date, completion: @escaping() -> Void) {
         let calendar = NSCalendar.current
         var summaryQuery: HKActivitySummaryQuery?
@@ -127,16 +138,22 @@ class DailyData {
         let predicate = HKQuery.predicateForActivitySummary(with: startDateComponents)
         
         summaryQuery = HKActivitySummaryQuery(predicate: predicate) {(query, summariesOrNil, errorOrNil) -> Void in
+            
+            if let error = errorOrNil {
+                print(error)
+            }
+            
             guard let summaries = summariesOrNil else{
                 return
             }
+            
             for summary in summaries{
                 let energy   = summary.activeEnergyBurned.doubleValue(for: HKUnit.kilocalorie())
                 let stand    = summary.appleStandHours.doubleValue(for: HKUnit.count())
                 let exercise = summary.appleExerciseTime.doubleValue(for: HKUnit.second())
                 self.activitySummary = ActivitySummary(date: endDate, energy: energy, standSeconds: stand, exerciseSeconds: exercise)
-                completion()
             }
+            completion()
         }
         if let healthStore = self.healthStore?.healthStore, let summaryQuery = summaryQuery {
             healthStore.execute(summaryQuery)

@@ -13,7 +13,6 @@ class BodyData{
     var body: Body
     var healthStore: HealthStore?
     var bmi: Double
-    var saturation: Double
     var heightCm: Double
     var weightKg: Double
     var bodyFatPercentage: Double
@@ -28,7 +27,6 @@ class BodyData{
         self.body = Body()
         self.healthStore = HealthStore()
         self.bmi = Double()
-        self.saturation = Double()
         self.heightCm = Double()
         self.weightKg = Double()
         self.bodyFatPercentage = Double()
@@ -52,93 +50,75 @@ class BodyData{
         }
         
         group.enter()
-        queue.async(group: group){ [self] in
+        queue.async(group: group){
             
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .bodyMassIndex)!, unit: .count(), completion: { (bmi) in
+                self.bmi = bmi
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .oxygenSaturation)!, unit: HKUnit.percent(), completion: { (oxygen) in
+                self.oxygenSat = oxygen
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .height)!, unit: .meterUnit(with: .centi), completion: { (heightCm) in
+                self.heightCm = heightCm
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .bodyMass)!, unit: .gramUnit(with: .kilo), completion: { weightKg in
+                self.weightKg = weightKg
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .bodyFatPercentage)!, unit: HKUnit.percent(), completion: { (bodyFat) in
+                self.bodyFatPercentage = bodyFat
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!, unit: .secondUnit(with: .milli), completion: { hrv in
+                self.hrVar = hrv
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .bloodPressureSystolic)!, unit: HKUnit.millimeterOfMercury(), completion: { bpSys in
+                self.bpSys = Int(bpSys)
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .bloodPressureDiastolic)!, unit: HKUnit.millimeterOfMercury(), completion: { bpDia in
+                self.bpDia = Int(bpDia)
+                group.leave()
+            })
+            
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .bodyTemperature)!, unit: HKUnit.degreeCelsius(), completion: { temp in
+                self.bodyTemp = temp
+                group.leave()
+            })
+
+            group.enter()
+            self.healthStore?.executeStatisticCollectionQueryAvg(startDate: startDate, endDate: endDate, quantityType: HKQuantityType.quantityType(forIdentifier: .leanBodyMass)!, unit: HKUnit.gramUnit(with:.kilo), completion: { muscleMass in
+                self.leanMuscleKg = muscleMass
+                group.leave()
+            })
             group.leave()
         }
         
-//        group.notify(queue: queue){
-//            self.body = Body(bmi: <#T##Double#>, oxygenSaturation: <#T##Double#>, heightCm: <#T##Double#>, weightKg: <#T##Double#>, bodyFatPercentage: <#T##Double#>, oxygenSat: <#T##Double#>, hrVar: <#T##Double#>, bpSys: <#T##Int#>, bpDia: <#T##Int#>, bodyTemp: <#T##Double#>, leanMuscleKg: <#T##Double#>)
-//
-//            completion()
-//        }
-    }
-    
-    func getBmi(startDate: Date, endDate: Date, completion: @escaping () -> Void){
-        var bmiQuery: HKStatisticsCollectionQuery?
-        let bmiType = HKObjectType.quantityType(forIdentifier: .bodyMassIndex)!
-        
-        let quantPredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        
-        bmiQuery = HKStatisticsCollectionQuery(quantityType: bmiType, quantitySamplePredicate: quantPredicate, options: .discreteAverage, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
-        
-        bmiQuery!.initialResultsHandler = { query, result, error in
-            if let error = error {
-                print(error)
-            }
-            guard let bmi = result else{
-                fatalError("Cannot get BMI data")
-            }
-            
-            bmi.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                self.bmi = statistics.averageQuantity()?.doubleValue(for: .count()) ?? 0.0
-                completion()
-            }
-        }
-        if let healthStore = self.healthStore?.healthStore, let bmiQuery = bmiQuery {
-            healthStore.execute(bmiQuery)
+        group.notify(queue: queue){
+            self.body = Body(bmi: self.bmi, oxygenSaturation: self.oxygenSat, heightCm: self.heightCm, weightKg: self.weightKg, bodyFatPercentage: self.bodyFatPercentage, hrVar: self.hrVar, bpSys: self.bpSys, bpDia: self.bpDia, bodyTemp: self.bodyTemp, leanMuscleKg: self.leanMuscleKg)
+            completion()
         }
     }
-    
-    func getOxygenSat(startDate: Date, endDate: Date, completion: @escaping() -> Void){
-        var oxygenSatQuery: HKStatisticsCollectionQuery?
-        let oxygenSatType = HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
-        
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        
-        oxygenSatQuery = HKStatisticsCollectionQuery(quantityType: oxygenSatType, quantitySamplePredicate: predicate, options: .discreteAverage, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
-        
-        oxygenSatQuery!.initialResultsHandler = { query, result, error in
-            if let error = error {
-                print(error)
-            }
-            guard let oxygenSat = result else{
-                fatalError("Cannot get oxygen saturation data")
-            }
-            
-            oxygenSat.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                self.oxygenSat = statistics.averageQuantity()?.doubleValue(for: .percent()) ?? 0.0
-                completion()
-            }
-        }
-    }
-    
-    func getHeight(startDate: Date, endDate: Date, completion: @escaping() -> Void){
-        var heightQuery: HKStatisticsCollectionQuery?
-        let heightType = HKObjectType.quantityType(forIdentifier: .height)!
-        
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        
-        heightQuery = HKStatisticsCollectionQuery(quantityType: heightType, quantitySamplePredicate: predicate, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
-        
-        heightQuery!.initialResultsHandler = {query, result, error in
-            if let error = error {
-                print(error)
-            }
-            guard let height = result else{
-                fatalError("Cannot retrieve height data")
-            }
-            height.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
-                self.heightCm = statistics.averageQuantity()?.doubleValue(for: .meterUnit(with: .centi)) ?? 0.0
-                completion()
-            }
-        }
-        
-        if let healthStore = self.healthStore?.healthStore, let heightQuery = heightQuery{
-            healthStore.execute(heightQuery)
-        }
-    }
-
     
     
 }

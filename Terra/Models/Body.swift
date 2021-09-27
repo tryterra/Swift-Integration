@@ -14,7 +14,6 @@ struct Body: Codable {
     var heightCm: Double = Double()
     var weightKg: Double = Double()
     var bodyFatPercentage: Double = Double()
-    var oxygenSat: Double = Double()
     var hrVar: Double = Double()
     var bpSys: Int = Int()
     var bpDia: Int = Int()
