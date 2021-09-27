@@ -17,6 +17,9 @@ class DailyData {
     var swimDistance: Double
     var totalSteps: Int
     var floorsClimbed: Int
+    var basalEnergy: Double
+    var vo2Max: Double
+    var swimCount: Int
     var activitySummary: ActivitySummary
     
     init(){
@@ -27,7 +30,10 @@ class DailyData {
         self.swimDistance = Double()
         self.totalSteps = Int()
         self.floorsClimbed = Int()
+        self.basalEnergy = Double()
         self.activitySummary = ActivitySummary()
+        self.swimCount = Int()
+        self.vo2Max = Double()
     }
 
     func getDaily(completion: @escaping ()-> Void) -> Void {
@@ -73,6 +79,14 @@ class DailyData {
             })
             group.enter()
             getActivitySummary(startDate: startDate, endDate: endDate, completion:  {() ->  Void in
+                group.leave()
+            })
+            group.enter()
+            getBasalEnergy(startDate: startDate, endDate: endDate, completion:  {() ->  Void in
+                group.leave()
+            })
+            group.enter()
+            getSwimStroke(startDate: startDate, endDate: endDate, completion:  {() ->  Void in
                 group.leave()
             })
             group.leave()
@@ -251,6 +265,84 @@ class DailyData {
         }
         if let healthStore = self.healthStore?.healthStore, let summaryQuery = summaryQuery {
             healthStore.execute(summaryQuery)
+        }
+    }
+    
+    func getVo2Max(startDate: Date, endDate: Date, completion: @escaping () -> Void) {
+        var vo2MaxQuery: HKStatisticsCollectionQuery?
+        let vo2MaxType = HKQuantityType.quantityType(forIdentifier: .vo2Max)!
+        
+        let samplePredicate = HKQuery.predicateForSamples(withStart: startDate, end:endDate, options: .strictStartDate)
+        
+        vo2MaxQuery = HKStatisticsCollectionQuery(quantityType: vo2MaxType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
+        
+        vo2MaxQuery!.initialResultsHandler = {query, result, error in
+            if let error = error {
+                print(error)
+            }
+            guard let vo2max = result else{
+                fatalError("Cannot get vo2max")
+            }
+            vo2max.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
+                self.vo2Max = statistics.sumQuantity()?.doubleValue(for: HKUnit.literUnit(with: .milli).unitDivided(by: HKUnit.gramUnit(with: .kilo).unitDivided(by: HKUnit.minute()))) ?? 0.0
+                completion()
+            }
+        }
+        if let healthStore = self.healthStore?.healthStore, let vo2MaxQuery = vo2MaxQuery {
+            healthStore.execute(vo2MaxQuery)
+        }
+        
+    }
+    
+    func getBasalEnergy(startDate: Date, endDate: Date, completion: @escaping () -> Void) {
+        var basalEnergyQuery: HKStatisticsCollectionQuery?
+        let basalEnergyType = HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!
+        
+        let samplePredicate = HKQuery.predicateForSamples(withStart: startDate, end:endDate, options: .strictStartDate)
+        
+        basalEnergyQuery = HKStatisticsCollectionQuery(quantityType: basalEnergyType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
+        
+        basalEnergyQuery!.initialResultsHandler = {query, result, error in
+            if let error = error {
+                print(error)
+            }
+            guard let basalEnergy = result else{
+                fatalError("Cannot get vo2max")
+            }
+            basalEnergy.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
+                self.basalEnergy = statistics.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0.0
+                self.daily.setBasalEnergy(energy: self.basalEnergy)
+                completion()
+            }
+        }
+        if let healthStore = self.healthStore?.healthStore, let basalEnergyQuery = basalEnergyQuery {
+            healthStore.execute(basalEnergyQuery)
+        }
+    }
+    
+    func getSwimStroke(startDate: Date, endDate: Date, completion: @escaping () -> Void) {
+        var swimStrokeQuery: HKStatisticsCollectionQuery?
+        let swimStrokeType = HKQuantityType.quantityType(forIdentifier: .swimmingStrokeCount)!
+        
+        let samplePredicate = HKQuery.predicateForSamples(withStart: startDate, end:endDate, options: .strictStartDate)
+        
+        swimStrokeQuery = HKStatisticsCollectionQuery(quantityType: swimStrokeType, quantitySamplePredicate: samplePredicate, options: .cumulativeSum, anchorDate: Date.mondayAt12AM(), intervalComponents: DateComponents(day: 1))
+        
+        swimStrokeQuery!.initialResultsHandler = {query, result, error in
+            if let error = error {
+                print(error)
+            }
+            guard let swimStroke = result else{
+                fatalError("Cannot get swim stroke counts")
+            }
+            swimStroke.enumerateStatistics(from: startDate, to: endDate){(statistics, stop) in
+                self.swimCount = Int(statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0)
+                self.daily.setSwimCount(count: self.swimCount)
+                completion()
+            }
+        }
+        if let healthStore = self.healthStore?.healthStore, let swimStrokeQuery = swimStrokeQuery {
+            healthStore.execute(swimStrokeQuery)
         }
     }
     
