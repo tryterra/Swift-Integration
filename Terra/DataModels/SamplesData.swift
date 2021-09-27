@@ -36,22 +36,25 @@ class SamplesData{
                 print(error)
             }
             guard let quantity = quantity else {
-                fatalError("Cannot get data")
+                return
             }
+            group.enter()
             let bpm = quantity.doubleValue(for: HKUnit.hertzUnit(with: .milli))*60/1000
             let time = interval
             heartRates.append(HeartRate(timestamp: time!.start, bpm: Int(bpm)))
+            group.leave()
         }
         
         heartRateQuery = HKQuantitySeriesSampleQuery(quantityType: heartRateType, predicate: predicate, quantityHandler: sampleHeartRateDataHandler(query:quantity:interval:sample:done:error:))
         
         if let healthStore = self.healthStore?.healthStore,
            let heartRateQuery = heartRateQuery{
-                queue.async(group:group) {
-                    group.enter()
-                    healthStore.execute(heartRateQuery)
-                    group.leave()
-                }
+            group.enter()
+            queue.async(group:group) {
+                group.enter()
+                healthStore.execute(heartRateQuery)
+            }
+            group.leave()
             }
         group.notify(queue: queue){
             completion(heartRates)
@@ -68,7 +71,7 @@ class SamplesData{
         
         
         guard let startDate = calendar.date(byAdding: .day, value: -1, to: endDate) else {
-            fatalError("Cannot Create StartDate")
+            return
         }
         
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
@@ -79,7 +82,7 @@ class SamplesData{
                 print(error)
             }
             guard let quantity = quantity else {
-                fatalError("Cannot get data")
+                return
             }
             let sdnn = quantity.doubleValue(for: .secondUnit(with: .milli))
             let time = interval
@@ -93,9 +96,10 @@ class SamplesData{
                 queue.async(group:group) {
                     group.enter()
                     healthStore.execute(hrvQuery)
-                    group.leave()
                 }
+            group.leave()
             }
+        
         group.notify(queue: queue){
             completion(heartRateHRV)
         }

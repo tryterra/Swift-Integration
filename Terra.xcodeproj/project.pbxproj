@@ -14,6 +14,8 @@
 		9B2EBA1626FE41F000F2FC35 /* SamplesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */; };
 		9B2EBA1826FE435300F2FC35 /* AthleteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1726FE435300F2FC35 /* AthleteData.swift */; };
 		9B2EBA1A26FE4B2500F2FC35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */; };
+		9B2EBA1D2701CB0D00F2FC35 /* BodyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1C2701CB0D00F2FC35 /* BodyData.swift */; };
+		9B2EBA1F2701D82500F2FC35 /* Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1E2701D82500F2FC35 /* Body.swift */; };
 		9B9A003326FC90100017C153 /* TerraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003226FC90100017C153 /* TerraApp.swift */; };
 		9B9A003526FC90100017C153 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003426FC90100017C153 /* ContentView.swift */; };
 		9B9A003726FC90130017C153 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9A003626FC90130017C153 /* Assets.xcassets */; };
@@ -56,6 +58,8 @@
 		9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplesData.swift; sourceTree = "<group>"; };
 		9B2EBA1726FE435300F2FC35 /* AthleteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteData.swift; sourceTree = "<group>"; };
 		9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9B2EBA1C2701CB0D00F2FC35 /* BodyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyData.swift; sourceTree = "<group>"; };
+		9B2EBA1E2701D82500F2FC35 /* Body.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Body.swift; sourceTree = "<group>"; };
 		9B9A002F26FC90100017C153 /* Terra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9A003226FC90100017C153 /* TerraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraApp.swift; sourceTree = "<group>"; };
 		9B9A003426FC90100017C153 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +108,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B2EBA1B2701CACB00F2FC35 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				9B2EBA1326FE410500F2FC35 /* DailyData.swift */,
+				9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */,
+				9B2EBA1726FE435300F2FC35 /* AthleteData.swift */,
+				9B2EBA1C2701CB0D00F2FC35 /* BodyData.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
 		9B9A002626FC90100017C153 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +143,7 @@
 		9B9A003126FC90100017C153 /* Terra */ = {
 			isa = PBXGroup;
 			children = (
+				9B2EBA1B2701CACB00F2FC35 /* DataModels */,
 				9B9A006A26FCB8DF0017C153 /* Models */,
 				9B9A006926FC9C9E0017C153 /* Info.plist */,
 				9B9A006326FC98970017C153 /* Terra.entitlements */,
@@ -141,9 +157,6 @@
 				9B9A007126FCCA770017C153 /* TerraConnect.swift */,
 				9B9A007726FCD3DB0017C153 /* TerraConnectUI.swift */,
 				9B9A007926FCE7800017C153 /* Terra.swift */,
-				9B2EBA1326FE410500F2FC35 /* DailyData.swift */,
-				9B2EBA1526FE41F000F2FC35 /* SamplesData.swift */,
-				9B2EBA1726FE435300F2FC35 /* AthleteData.swift */,
 				9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */,
 			);
 			path = Terra;
@@ -189,6 +202,7 @@
 				9B2EBA0B26FE021100F2FC35 /* Athlete.swift */,
 				9B2EBA0F26FE315400F2FC35 /* Samples.swift */,
 				9B2EBA1126FE385A00F2FC35 /* Daily.swift */,
+				9B2EBA1E2701D82500F2FC35 /* Body.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -325,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B9A003F26FC90130017C153 /* Terra.xcdatamodeld in Sources */,
+				9B2EBA1D2701CB0D00F2FC35 /* BodyData.swift in Sources */,
 				9B2EBA1626FE41F000F2FC35 /* SamplesData.swift in Sources */,
 				9B9A007A26FCE7800017C153 /* Terra.swift in Sources */,
 				9B9A006826FC99AD0017C153 /* HealthStore.swift in Sources */,
@@ -337,6 +352,7 @@
 				9B2EBA1826FE435300F2FC35 /* AthleteData.swift in Sources */,
 				9B9A003326FC90100017C153 /* TerraApp.swift in Sources */,
 				9B2EBA1226FE385A00F2FC35 /* Daily.swift in Sources */,
+				9B2EBA1F2701D82500F2FC35 /* Body.swift in Sources */,
 				9B2EBA1426FE410500F2FC35 /* DailyData.swift in Sources */,
 				9B2EBA0C26FE021100F2FC35 /* Athlete.swift in Sources */,
 			);
