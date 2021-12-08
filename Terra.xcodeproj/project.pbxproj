@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B2EBA1A26FE4B2500F2FC35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */; };
+		9B52B71827148FF7001B6A3D /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B52B71727148FF7001B6A3D /* Widget.swift */; };
+		9B7CDF6B270F216C005B0C76 /* TerraSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9B7CDF6A270F216C005B0C76 /* TerraSwift */; };
+		9B81D672270F179800B60BB4 /* Terra.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003D26FC90130017C153 /* Terra.xcdatamodeld */; };
 		9B9A003326FC90100017C153 /* TerraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003226FC90100017C153 /* TerraApp.swift */; };
 		9B9A003526FC90100017C153 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003426FC90100017C153 /* ContentView.swift */; };
 		9B9A003726FC90130017C153 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9A003626FC90130017C153 /* Assets.xcassets */; };
 		9B9A003A26FC90130017C153 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B9A003926FC90130017C153 /* Preview Assets.xcassets */; };
 		9B9A003C26FC90130017C153 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003B26FC90130017C153 /* Persistence.swift */; };
-		9B9A003F26FC90130017C153 /* Terra.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A003D26FC90130017C153 /* Terra.xcdatamodeld */; };
 		9B9A004926FC90130017C153 /* TerraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A004826FC90130017C153 /* TerraTests.swift */; };
 		9B9A005326FC90130017C153 /* TerraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A005226FC90130017C153 /* TerraUITests.swift */; };
 		9B9A005526FC90130017C153 /* TerraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A005426FC90130017C153 /* TerraUITestsLaunchTests.swift */; };
+		9B9A006626FC98970017C153 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9A006526FC98970017C153 /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,11 +39,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9B892C3C270CA64100C57ADC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Terra/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		9B2EBA292704D7B600F2FC35 /* TerraDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TerraDebug.entitlements; sourceTree = "<group>"; };
+		9B52B71727148FF7001B6A3D /* Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		9B9A002F26FC90100017C153 /* Terra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9A003226FC90100017C153 /* TerraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraApp.swift; sourceTree = "<group>"; };
 		9B9A003426FC90100017C153 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		9B9A003626FC90130017C153 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9B9A003626FC90130017C153 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Terra/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		9B9A003926FC90130017C153 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9B9A003B26FC90130017C153 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9B9A003E26FC90130017C153 /* Terra.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Terra.xcdatamodel; sourceTree = "<group>"; };
@@ -48,6 +68,9 @@
 		9B9A004E26FC90130017C153 /* TerraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TerraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9A005226FC90130017C153 /* TerraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraUITests.swift; sourceTree = "<group>"; };
 		9B9A005426FC90130017C153 /* TerraUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9B9A006326FC98970017C153 /* Terra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Terra.entitlements; sourceTree = "<group>"; };
+		9B9A006526FC98970017C153 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		9B9A006926FC9C9E0017C153 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B9A006626FC98970017C153 /* HealthKit.framework in Frameworks */,
+				9B7CDF6B270F216C005B0C76 /* TerraSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,13 +100,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B81D66B270F0E0C00B60BB4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		9B9A002626FC90100017C153 = {
 			isa = PBXGroup;
 			children = (
+				9B81D66B270F0E0C00B60BB4 /* Packages */,
 				9B9A003126FC90100017C153 /* Terra */,
 				9B9A004726FC90130017C153 /* TerraTests */,
 				9B9A005126FC90130017C153 /* TerraUITests */,
 				9B9A003026FC90100017C153 /* Products */,
+				9B9A006426FC98970017C153 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,12 +132,17 @@
 		9B9A003126FC90100017C153 /* Terra */ = {
 			isa = PBXGroup;
 			children = (
+				9B2EBA292704D7B600F2FC35 /* TerraDebug.entitlements */,
+				9B9A006926FC9C9E0017C153 /* Info.plist */,
+				9B9A006326FC98970017C153 /* Terra.entitlements */,
 				9B9A003226FC90100017C153 /* TerraApp.swift */,
 				9B9A003426FC90100017C153 /* ContentView.swift */,
 				9B9A003626FC90130017C153 /* Assets.xcassets */,
+				9B52B71727148FF7001B6A3D /* Widget.swift */,
 				9B9A003B26FC90130017C153 /* Persistence.swift */,
 				9B9A003D26FC90130017C153 /* Terra.xcdatamodeld */,
 				9B9A003826FC90130017C153 /* Preview Content */,
+				9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */,
 			);
 			path = Terra;
 			sourceTree = "<group>";
@@ -133,6 +172,14 @@
 			path = TerraUITests;
 			sourceTree = "<group>";
 		};
+		9B9A006426FC98970017C153 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B9A006526FC98970017C153 /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,12 +190,16 @@
 				9B9A002B26FC90100017C153 /* Sources */,
 				9B9A002C26FC90100017C153 /* Frameworks */,
 				9B9A002D26FC90100017C153 /* Resources */,
+				9B892C3C270CA64100C57ADC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Terra;
+			packageProductDependencies = (
+				9B7CDF6A270F216C005B0C76 /* TerraSwift */,
+			);
 			productName = Terra;
 			productReference = 9B9A002F26FC90100017C153 /* Terra.app */;
 			productType = "com.apple.product-type.application";
@@ -221,6 +272,9 @@
 				Base,
 			);
 			mainGroup = 9B9A002626FC90100017C153;
+			packageReferences = (
+				9B7CDF69270F216C005B0C76 /* XCRemoteSwiftPackageReference "TerraSwift" */,
+			);
 			productRefGroup = 9B9A003026FC90100017C153 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -238,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B9A003A26FC90130017C153 /* Preview Assets.xcassets in Resources */,
+				9B2EBA1A26FE4B2500F2FC35 /* Main.storyboard in Resources */,
 				9B9A003726FC90130017C153 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,10 +318,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B9A003F26FC90130017C153 /* Terra.xcdatamodeld in Sources */,
+				9B81D672270F179800B60BB4 /* Terra.xcdatamodeld in Sources */,
 				9B9A003C26FC90130017C153 /* Persistence.swift in Sources */,
 				9B9A003526FC90100017C153 /* ContentView.swift in Sources */,
 				9B9A003326FC90100017C153 /* TerraApp.swift in Sources */,
+				9B52B71827148FF7001B6A3D /* Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,14 +480,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Terra/TerraDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Terra/Preview Content\"";
+				DEVELOPMENT_TEAM = URWZG4YJ54;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Terra/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Terra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app will read and send health data";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app will read and send health data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -440,11 +506,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = terra.Terra;
+				PRODUCT_BUNDLE_IDENTIFIER = tryterra.Terra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -453,14 +520,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Terra/Terra.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Terra/Preview Content\"";
+				DEVELOPMENT_TEAM = URWZG4YJ54;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Terra/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Terra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app will read and send health data";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app will read and send health data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -469,11 +546,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = terra.Terra;
+				PRODUCT_BUNDLE_IDENTIFIER = tryterra.Terra;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -482,8 +560,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = URWZG4YJ54;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -506,8 +586,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = URWZG4YJ54;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -609,6 +691,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9B7CDF69270F216C005B0C76 /* XCRemoteSwiftPackageReference "TerraSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tryterra/TerraSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9B7CDF6A270F216C005B0C76 /* TerraSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B7CDF69270F216C005B0C76 /* XCRemoteSwiftPackageReference "TerraSwift" */;
+			productName = TerraSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		9B9A003D26FC90130017C153 /* Terra.xcdatamodeld */ = {

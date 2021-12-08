@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import HealthKit
 
 @main
 struct TerraApp: App {
     let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -18,3 +18,4 @@ struct TerraApp: App {
         }
     }
 }
+
