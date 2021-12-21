@@ -37,8 +37,8 @@ func getSessionId() -> String{
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Accept")
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.setValue("YOUR-DEV-ID", forHTTPHeaderField: "dev-id")
-    request.setValue("YOUR-X-API-KEY", forHTTPHeaderField: "X-API-Key")
+    request.setValue(DEVID, forHTTPHeaderField: "dev-id")
+    request.setValue(XAPIKEY, forHTTPHeaderField: "X-API-Key")
     request.httpBody = jsonData
     let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
         if let data = data{

@@ -80,8 +80,8 @@ public struct TerraWidget: UIViewRepresentable {
                 webView.getCookies{cookies in
                     print(cookies)
                 }
-                widget.user_id = connectTerra(dev_id: "YOUR-DEV-ID", xAPIKey: "YOUR-X-API-KEY")
-                widget.TerraClient = Terra(user_id: widget.user_id, dev_id: "YOUR-DEV-ID", xAPIKey: "YOUR-X-API-KEY", enableHr: true)
+                widget.user_id = connectTerra(dev_id: DEVID, xAPIKey: XAPIKEY)
+                widget.TerraClient = Terra(user_id: widget.user_id, dev_id: DEVID, xAPIKey: XAPIKEY, enableHr: true)
             }
             else if webView.url!.absoluteString.contains("https://widget.tryterra.co/?auth=true&user-id="){
                 webView.removeFromSuperview()
