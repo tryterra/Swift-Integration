@@ -20,6 +20,7 @@
 		9B9A005326FC90130017C153 /* TerraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A005226FC90130017C153 /* TerraUITests.swift */; };
 		9B9A005526FC90130017C153 /* TerraUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9A005426FC90130017C153 /* TerraUITestsLaunchTests.swift */; };
 		9B9A006626FC98970017C153 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9A006526FC98970017C153 /* HealthKit.framework */; };
+		E58B28372771F82B004867ED /* TerraConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58B28362771F82B004867ED /* TerraConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		9B9A006326FC98970017C153 /* Terra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Terra.entitlements; sourceTree = "<group>"; };
 		9B9A006526FC98970017C153 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		9B9A006926FC9C9E0017C153 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E58B28362771F82B004867ED /* TerraConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerraConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				9B9A003D26FC90130017C153 /* Terra.xcdatamodeld */,
 				9B9A003826FC90130017C153 /* Preview Content */,
 				9B2EBA1926FE4B2500F2FC35 /* Main.storyboard */,
+				E58B28362771F82B004867ED /* TerraConfig.swift */,
 			);
 			path = Terra;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				9B9A003C26FC90130017C153 /* Persistence.swift in Sources */,
 				9B9A003526FC90100017C153 /* ContentView.swift in Sources */,
 				9B9A003326FC90100017C153 /* TerraApp.swift in Sources */,
+				E58B28372771F82B004867ED /* TerraConfig.swift in Sources */,
 				9B52B71827148FF7001B6A3D /* Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,7 +490,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Terra/Preview Content\"";
-				DEVELOPMENT_TEAM = URWZG4YJ54;
+				DEVELOPMENT_TEAM = XZTCHPV389;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Terra/Info.plist;
@@ -526,7 +530,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Terra/Preview Content\"";
-				DEVELOPMENT_TEAM = URWZG4YJ54;
+				DEVELOPMENT_TEAM = XZTCHPV389;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Terra/Info.plist;
