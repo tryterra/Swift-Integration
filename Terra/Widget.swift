@@ -74,16 +74,15 @@ public struct TerraWidget: UIViewRepresentable {
         }
         public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!){
             print(webView.url!.absoluteString)
-            if webView.url!.absoluteString.contains("apple_auth=true"){
+            if webView.url!.absoluteString.contains("success?resource=APPLE"){
                 webView.removeFromSuperview()
                 widget.authenticated = true
-                webView.getCookies{cookies in
-                    print(cookies)
-                }
                 widget.user_id = connectTerra(dev_id: DEVID, xAPIKey: XAPIKEY)
-                widget.TerraClient = Terra(user_id: widget.user_id, dev_id: DEVID, xAPIKey: XAPIKEY, enableHr: true)
+                widget.TerraClient = Terra(user_id: widget.user_id, dev_id: DEVID, xAPIKey: XAPIKEY)
+                print(widget.user_id)
+
             }
-            else if webView.url!.absoluteString.contains("https://widget.tryterra.co/?auth=true&user-id="){
+            else if webView.url!.absoluteString.contains("success"){
                 webView.removeFromSuperview()
                 widget.user_id = webView.url!["user-id"]!
                 widget.authenticated = true

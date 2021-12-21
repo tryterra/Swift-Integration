@@ -30,7 +30,7 @@ func getSessionId() -> String{
     let session_url = URL(string: "https://api.tryterra.co/v2/auth/generateWidgetSession")
     var url = ""
     var request = URLRequest(url: session_url!)
-    let requestData = ["reference_id": "testing", "providers" : "APPLE", "auth_success_redirect_url": "www.tryterra.co", "auth_failure_redirect_url": "www.google.com", "language": "EN"]
+    let requestData = ["reference_id": "testing", "providers" : "APPLE", "language": "EN"]
     let group = DispatchGroup()
     let queue = DispatchQueue(label: "widget.Terra")
     let jsonData = try? JSONSerialization.data(withJSONObject: requestData)
