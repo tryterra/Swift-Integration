@@ -67,6 +67,8 @@ class MainController: UIViewController {
     var endDate = Date()
     
     @IBOutlet weak var connect:UIButton!
+    
+    @IBOutlet weak var disconnect:UIButton!
 
     @IBOutlet weak var athlete:UIButton!
     
@@ -121,8 +123,6 @@ class MainController: UIViewController {
 //        self.navigationController?.pushViewController(vc!, animated: true)
 //        let vc = UIStoryboard.init(name: "Main", bundle:
         performSegue(withIdentifier: "PresentWebView", sender: nil)
-        print("Should have moved")
-
     }
     
     @IBAction func startDateChange(_ sender: UIDatePicker){
@@ -133,6 +133,9 @@ class MainController: UIViewController {
         endDate = sender.date
     }
     
+    @IBAction func disconnect(_ sender: UIButton){
+        terraClient?.disconnectFromTerra()
+    }
 }
 
 
@@ -162,8 +165,9 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
              print(urlStr)
              if urlStr.contains("success?resource=APPLE") {
                  webView.stopLoading()
-                 userId = TerraSwift.connectTerra(dev_id: DEVID, xAPIKey: XAPIKEY)
+                 userId = TerraSwift.connectTerra(dev_id: DEVID, xAPIKey: XAPIKEY, referenceId: "testingReferenceId")
                  terraClient = TerraSwift.Terra(user_id: userId, dev_id: DEVID, xAPIKey: XAPIKEY)
+                 print(userId)
                  self.dismiss(animated: true, completion: nil)
                  webView.removeFromSuperview()
              }
