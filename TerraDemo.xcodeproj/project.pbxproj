@@ -316,7 +316,7 @@
 				CODE_SIGN_ENTITLEMENTS = TerraDemo/TerraDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = URWZG4YJ54;
+				DEVELOPMENT_TEAM = XZTCHPV389;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TerraDemo/Info.plist;
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Display Health Data to Developers";
@@ -348,7 +348,7 @@
 				CODE_SIGN_ENTITLEMENTS = TerraDemo/TerraDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = URWZG4YJ54;
+				DEVELOPMENT_TEAM = XZTCHPV389;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TerraDemo/Info.plist;
 				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Display Health Data to Developers";

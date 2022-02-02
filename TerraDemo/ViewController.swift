@@ -134,7 +134,7 @@ class MainController: UIViewController {
     }
     
     @IBAction func disconnect(_ sender: UIButton){
-        terraClient?.disconnectFromTerra()
+        terraClient?.disconnectFromTerra(user_id: userId)
     }
 }
 
@@ -165,8 +165,8 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
              print(urlStr)
              if urlStr.contains("success?resource=APPLE") {
                  webView.stopLoading()
-                 userId = TerraSwift.connectTerra(dev_id: DEVID, xAPIKey: XAPIKEY, referenceId: "testingReferenceId")
-                 terraClient = TerraSwift.Terra(user_id: userId, dev_id: DEVID, xAPIKey: XAPIKEY)
+                 userId = (TerraSwift.connectTerra(dev_id: DEVID, xAPIKey: XAPIKEY, referenceId: "testingReferenceId")?.user_id) ?? ""
+                 terraClient = try! TerraSwift.Terra(dev_id: DEVID, xAPIKey: XAPIKEY)
                  print(userId)
                  self.dismiss(animated: true, completion: nil)
                  webView.removeFromSuperview()
@@ -175,6 +175,12 @@ class WebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         decisionHandler(.allow)
     }
 
+    func useTerraClientExample(userId: String){
+        let client = TerraSwift.TerraClient(user_id: userId, dev_id: DEVID, xAPIKey: XAPIKEY)
+        print(client.getAthlete(toWebhook: false)?.message ?? "No athlete response")
+        print(client.getBody(startDate: Date().timeIntervalSince1970, endDate: Date().timeIntervalSince1970, toWebhook: false)?.data ?? "No body response")
+    }
+    
 }
 
 
